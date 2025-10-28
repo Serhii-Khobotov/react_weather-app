@@ -1,73 +1,70 @@
-# React + TypeScript + Vite
+# Weather Forecast Web App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple and responsive web application for viewing current weather conditions by city name.
 
-Currently, two official plugins are available:
+## Task
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Goal:**  
+Create a web application that fetches and displays weather data.
 
-## React Compiler
+**Requirements:**
+- Use any public weather API (e.g., [OpenWeatherMap](https://openweathermap.org/api)).
+- Provide an input field for entering a city name and a button to fetch the weather.
+- Display:
+  - Current temperature  
+  - Weather description  
+  - Humidity  
+  - Wind speed
+- Design a clean and simple UI with styles that visually reflect different weather conditions (e.g., sunny, rainy, snowy).
+- Implement a caching mechanism to prevent repeated API requests for the same city within **10 minutes**.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Technologies Used
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **React + TypeScript**
+- **Tailwind CSS** for styling
+- **OpenWeatherMap API**
+- **LocalStorage** for caching responses
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Features
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Real-time weather data fetching  
+- Error handling for invalid city names  
+- Input focus management for user convenience  
+- Weather data caching (10 minutes) to optimize API usage  
+- Adaptive and user-friendly design  
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Caching Logic
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+When the user searches for a city:
+1. The app checks `localStorage` for a cached result.
+2. If the data is less than **10 minutes old**, it’s displayed instantly.
+3. Otherwise, the app fetches new data from the API and updates the cache.
+
+---
+
+## Live Demo
+
+**[View the deployed app on GitHub Pages](https://Serhii-Khobotov.github.io/react_weather-app/)**
+
+---
+
+## How to Run Locally
+
+```bash
+# Clone the repository
+git clone https://github.com/Serhii-Khobotov/react_weather-app.git
+
+# Navigate into the project folder
+cd weather-app
+
+# Install dependencies
+npm install
+
+# Run the app
+npm run dev
