@@ -29,7 +29,7 @@ export async function getWeather(city: string, apiKey: string): Promise<WeatherD
   );
 
   if (!res.ok) {
-    throw new Error(`Місто ${city} не знайдено`);
+    throw new Error(`Місто не знайдено`);
   }
 
   const json = await res.json();

@@ -1,6 +1,7 @@
 import { useRef, useState, type FormEvent } from "react";
 import { getWeather } from "./services/getWeather";
-import WeatherCard from "./components/WeatherCard/WeatherCard";
+import WeatherCard from "./components/WeatherCard";
+import formatValue from "./services/formatValue";
 
 const API_KEY = "abad2c859f1dbb2be83a8040c3deaf48";
 
@@ -11,7 +12,6 @@ export default function App() {
   const [error, setError] = useState("");
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const valueTrimmed = value.trim();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
@@ -23,39 +23,24 @@ export default function App() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (valueTrimmed === "" && error !== "") {
+    if (formatValue(value) === "" && error !== "") {
       inputRef.current?.focus();
-      return;
-    } else if (valueTrimmed.trim() === "") {
       setError("Введіть назву міста");
+      return;
     }
+    
 
     try {
       setError("");
-      const data = await getWeather(valueTrimmed, API_KEY);
+      const data = await getWeather(formatValue(value), API_KEY);
       setWeather(data);
       setValue("");
-      setLocationMessage(`Погода в ${valueTrimmed[0].toUpperCase() + valueTrimmed.slice(1)}`);
+      setLocationMessage(`Погода в ${formatValue(value)}`);
     } catch (err: any) {
       setError(err.message);
       setWeather(null);
     }
   };
-
-  // const res = async () => {
-  //   const data = await fetch('https://api.openweathermap.org/data/2.5/weather?q=Kyiv&appid=abad2c859f1dbb2be83a8040c3deaf48&units=metric&lang=ua');
-
-  //   try {
-  //     const json = await data.json();
-  //     console.log(json);
-  //   }
-  //   catch (e) {
-  //     console.log('error')
-  //   }
-  // }
-
-  // res();
-
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-blue-300 to-blue-600 p-4 text-white">
@@ -68,7 +53,7 @@ export default function App() {
           <input
             ref={inputRef}
             type="text"
-            value={valueTrimmed}
+            value={value}
             onChange={handleChange}
             placeholder="Введіть місто..."
             className="px-3 py-2 rounded text-black bg-amber-200 hover:bg-amber-100"
