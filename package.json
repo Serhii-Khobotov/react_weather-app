@@ -11,9 +11,12 @@
     "deploy": "npm run build && gh-pages -d dist"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.9.2",
     "@tailwindcss/vite": "^4.1.16",
+    "cities.json": "^1.1.50",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-redux": "^9.2.0",
     "tailwindcss": "^4.1.16"
   },
   "devDependencies": {

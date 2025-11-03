@@ -13,5 +13,3 @@ export default function formatValue(value: string) {
 
   return result;  
 }
-
-console.log(formatValue('new   york'));
